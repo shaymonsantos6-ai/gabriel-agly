@@ -1,0 +1,133 @@
+/* ===== 1. CORES (tokens): preto + azul-marinho, sempre escuro ===== */
+:root{
+  --bg:#000000; --ink:#F2F2F2; --muted:#9A9A9A;
+  --blue:#2F63DB;   /* preenchimentos (botão) */
+  --sky:#7FA6FF;    /* textos e detalhes em azul, claros o bastante para ler no preto */
+  --navy:#1B45A8;   /* azul-marinho: brilhos e hover */
+  --glass:rgba(255,255,255,.05); --line:rgba(255,255,255,.14);
+  --display:"Bricolage Grotesque",Georgia,serif;
+  --body:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:dark;
+}
+
+/* ===== 2. BASE ===== */
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 72px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.0625rem/1.65 var(--body);overflow-x:hidden}
+/* manchas de luz suaves no fundo */
+body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+   radial-gradient(40rem 32rem at 85% 8%,color-mix(in srgb,var(--navy) 18%,transparent),transparent 70%),
+   radial-gradient(34rem 28rem at 5% 70%,color-mix(in srgb,var(--blue) 8%,transparent),transparent 70%)}
+a{color:inherit}
+h1,h2,h3{font-family:var(--display);line-height:1.1;margin:0;letter-spacing:-.02em}
+:focus-visible{outline:2px solid var(--sky);outline-offset:3px}
+.wrap{width:min(100% - 2.5rem,68rem);margin-inline:auto}
+section{padding-block:5.5rem}
+
+/* cabeçalho fixo; a faixa acima cobre a área do relógio no celular */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:19;
+  background:color-mix(in srgb,var(--bg) 80%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;
+  background:color-mix(in srgb,var(--bg) 80%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+.logo{font:700 1.15rem var(--display);text-decoration:none}
+nav{display:flex;gap:1.4rem}
+nav a{text-decoration:none;color:var(--muted);font-weight:500;font-size:.95rem;transition:color .2s}
+nav a:hover{color:var(--ink)}
+@media (max-width:520px){nav{gap:1rem}nav a{font-size:.88rem}}
+
+/* ===== 3. HOME ===== */
+.hero{padding-block:4rem 5rem}
+.hero .wrap{display:grid;gap:3rem;align-items:center}
+@media (min-width:860px){.hero .wrap{grid-template-columns:1.25fr .75fr}}
+h1{font-size:clamp(2.6rem,7vw,4.8rem);font-weight:700;max-width:12ch}
+.sub{font:500 clamp(1.15rem,2.4vw,1.45rem)/1.4 var(--display);color:var(--sky);margin:1.4rem 0 1rem;max-width:30ch}
+.lead{color:var(--muted);max-width:52ch;margin:0 0 2rem}
+.btns{display:flex;flex-wrap:wrap;gap:.8rem}
+.btn{display:inline-block;padding:.85rem 1.5rem;border-radius:999px;font-weight:600;text-decoration:none;
+  border:1px solid var(--line);transition:transform .2s,background .2s,border-color .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn.main{background:var(--blue);color:#fff;border-color:var(--blue)}
+.btn.main:hover{background:var(--navy);border-color:var(--sky)}
+.btn.ghost{background:var(--glass);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.btn.ghost:hover{border-color:var(--sky)}
+
+/* moldura da foto: o único movimento contínuo da página */
+.photo{position:relative;width:min(100%,19rem);aspect-ratio:4/5;margin-inline:auto}
+.photo::before{content:"";position:absolute;inset:-6px;border-radius:50% 50% 46% 46%/42% 42% 58% 58%;
+  background:conic-gradient(from 0deg,var(--sky),var(--navy),var(--sky));animation:spin 14s linear infinite;opacity:.8}
+.photo .frame{position:absolute;inset:0;border-radius:50% 50% 46% 46%/42% 42% 58% 58%;background:var(--bg);overflow:hidden}
+.photo .glass{position:absolute;inset:3px;border-radius:inherit;background:var(--glass);backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);display:grid;place-items:center;text-align:center}
+.photo b{font:700 4.5rem var(--display);color:var(--sky);display:block}
+.photo small{color:var(--muted);font-size:.85rem}
+.photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ===== 4. SOBRE ===== */
+h2{font-size:clamp(1.9rem,4.5vw,2.8rem);margin-bottom:2rem}
+.about{display:grid;gap:2.5rem}
+@media (min-width:860px){.about{grid-template-columns:1.3fr .7fr}}
+.about p{margin:0 0 1.2rem;max-width:60ch}
+.glass-card{background:var(--glass);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border:1px solid var(--line);border-radius:1.4rem;padding:1.6rem}
+dl{margin:0;display:grid;gap:1.1rem}
+dt{font-size:.85rem;color:var(--muted)}
+dd{margin:.1rem 0 0;font:600 1.05rem var(--display)}
+
+/* ===== 5. EXPERIÊNCIA (linha do tempo: aqui existe sequência de verdade) ===== */
+.timeline{list-style:none;margin:0;padding:0 0 0 1.6rem;border-left:2px solid var(--line);display:grid;gap:1.6rem}
+.timeline li{position:relative}
+.timeline li::before{content:"";position:absolute;left:calc(-1.6rem - 7px);top:1.9rem;width:12px;height:12px;border-radius:50%;
+  background:var(--bg);border:3px solid var(--sky)}
+.timeline li.now::before{border-color:#fff}
+.card{transition:transform .25s,border-color .25s}
+.card:hover{transform:translateY(-4px);border-color:var(--sky)}
+.card h3{font-size:1.35rem;margin-bottom:.3rem}
+.tag{display:inline-block;font-size:.82rem;font-weight:600;color:var(--sky);border:1px solid var(--line);
+  border-radius:999px;padding:.15rem .7rem;margin-bottom:.8rem}
+.card p{margin:0;color:var(--muted);max-width:56ch}
+
+/* ===== 5b. NOVAS SEÇÕES (Fase 2): grades de cartões, chips e espaços reservados ===== */
+header .wrap{gap:1rem}
+nav{overflow-x:auto;white-space:nowrap;scrollbar-width:none}
+.logo{white-space:nowrap}
+.lead2{color:var(--muted);max-width:60ch;margin:-1rem 0 2rem}
+.grid{display:grid;gap:1.1rem;grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),1fr))}
+.grid .glass-card h3{font-size:1.15rem;margin-bottom:.5rem}
+.grid .glass-card p{margin:0;color:var(--muted);font-size:.98rem}
+.chips{display:flex;flex-wrap:wrap;gap:.6rem}
+.chip{padding:.55rem 1rem;border:1px solid var(--line);border-radius:999px;background:var(--glass);transition:border-color .2s,transform .2s}
+.chip:hover{border-color:var(--sky);transform:translateY(-2px)}
+.skills h3{font-size:1.1rem;margin:1.8rem 0 .8rem;color:var(--sky)}
+.slot{border:1.5px dashed var(--line);border-radius:1.4rem;padding:1.4rem;color:var(--muted);text-align:center;display:grid;place-items:center;min-height:8.5rem;transition:border-color .2s}
+.slot:hover{border-color:var(--sky)}
+.slot b{display:block;color:var(--ink);font-family:var(--display);margin-bottom:.2rem}
+.biz-slots{margin-top:2.2rem}
+
+/* ===== 5c. FASE 3: frases, perguntas frequentes e detalhes ===== */
+.quotes{display:grid;gap:1.1rem;grid-template-columns:repeat(auto-fit,minmax(min(100%,19rem),1fr))}
+blockquote{margin:0;font:500 1.25rem/1.35 var(--display);padding:1.5rem;border-left:3px solid var(--sky);background:var(--glass);border-radius:0 1.2rem 1.2rem 0}
+blockquote.big{grid-column:1/-1;font-size:clamp(1.5rem,3.6vw,2.4rem);padding:2rem}
+.big-title{max-width:22ch}
+section .lead2.wide{max-width:64ch}
+details{border:1px solid var(--line);border-radius:1rem;background:var(--glass);padding:1rem 1.3rem;margin-bottom:.8rem;transition:border-color .2s}
+details[open]{border-color:var(--sky)}
+summary{cursor:pointer;font:600 1.05rem var(--display)}
+details p{color:var(--muted);margin:.8rem 0 0;max-width:62ch}
+
+/* ===== 6. RODAPÉ / CONTATO (provisório) ===== */
+footer{border-top:1px solid var(--line);padding-block:3rem;color:var(--muted)}
+footer strong{color:var(--ink);font-family:var(--display)}
+
+/* ===== 7. ANIMAÇÃO AO ROLAR (só se o JS rodar e se a pessoa permitir movimento) ===== */
+@media (prefers-reduced-motion:no-preference){
+  .js .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
+  .js .reveal.in{opacity:1;transform:none}
+}
+@media (prefers-reduced-motion:reduce){.photo::before{animation:none}html{scroll-behavior:auto}}
